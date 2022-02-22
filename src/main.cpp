@@ -131,12 +131,9 @@ void loop()
   V = (U / 10) * 0.97;
 
   // Convert meassurement to String
-  
   dtostrf(V, 1, 2, speedString);
   // Serial.printf("Wind speed:\t%s m/s\n", speedString);
   strcat(speedString, " m/s");
-  V = 0;
-  U = 0;
 
   // Tempratur in °C
   temperature = bme.readTemperature();
@@ -144,7 +141,6 @@ void loop()
   // temperature = 1.8 * bme.readTemperature() + 32;
 
   // Convert the value to char array
-  
   dtostrf(temperature, 1, 2, tempString);
   strcat(tempString, " °C");
   // Serial.printf("Temperature:\t%s\n", tempString);
@@ -153,7 +149,6 @@ void loop()
   humidity = bme.readHumidity();
 
   // Convert the value to String
-  
   dtostrf(humidity, 1, 2, humiString);
   strcat(humiString, " %");
   // Serial.printf("Humidity:\t%s °C\n", humiString);
@@ -162,7 +157,6 @@ void loop()
   pressure = bme.readPressure() / 100.0F;
 
   // Convert the value to String
-  
   dtostrf(pressure, 1, 2, pressString);
   strcat(pressString, " hPa");
   // Serial.printf("Pressure:\t%s hPa\n", pressString);
@@ -179,7 +173,6 @@ void loop()
   */
 
   // Convert the value to String
-  
   dtostrf(altitude, 1, 2, altiString);
   strcat(altiString, " m");
   // Serial.printf("Sealevel:\t%s m\n", altiString);
@@ -238,5 +231,8 @@ void loop()
   client.publish("ESP32/Weatherstation/Humidity", humiString);
   delay(50);
   client.publish("ESP32/Weatherstation/Temperature", tempString);
-
+  
+  // Reset speed value 
+  V = 0;
+  U = 0;
 }
