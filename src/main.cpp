@@ -53,6 +53,13 @@ float U = 0;
 float V = 0;
 bool S = 1;
 
+char speedString[8];
+char tempString[10];
+char humiString[10];
+char pressString[10];
+char altiString[10];
+char R[10];
+
 void setup()
 {
   // Setup Communication
@@ -66,10 +73,10 @@ void setup()
 
   // Pin declaration for weatherstation
   pinMode(Pin1, INPUT_PULLDOWN);
-  pinMode(Pin2, INPUT);
-  pinMode(Pin3, INPUT);
-  pinMode(Pin4, INPUT);
-  pinMode(Pin5, INPUT);
+  pinMode(Pin2, INPUT_PULLDOWN);
+  pinMode(Pin3, INPUT_PULLDOWN);
+  pinMode(Pin4, INPUT_PULLDOWN);
+  pinMode(Pin5, INPUT_PULLDOWN);
 
   // I2C begin adress from Daniel Funkte
   if (!bme.begin(0x77))
@@ -102,7 +109,7 @@ void loop()
   client.loop();
 
   // Meassurement of wind speed
-  while ((millis() - lastMsg) > 1000)
+  while ((millis() - lastMsg) < 10000)
   {
 
     if ((1 == S) && (0 == digitalRead(Pin1)))
@@ -124,10 +131,12 @@ void loop()
   V = (U / 10) * 0.97;
 
   // Convert meassurement to String
-  char speedString[8];
+  
   dtostrf(V, 1, 2, speedString);
   // Serial.printf("Wind speed:\t%s m/s\n", speedString);
   strcat(speedString, " m/s");
+  V = 0;
+  U = 0;
 
   // Tempratur in °C
   temperature = bme.readTemperature();
@@ -135,7 +144,7 @@ void loop()
   // temperature = 1.8 * bme.readTemperature() + 32;
 
   // Convert the value to char array
-  char tempString[10];
+  
   dtostrf(temperature, 1, 2, tempString);
   strcat(tempString, " °C");
   // Serial.printf("Temperature:\t%s\n", tempString);
@@ -144,7 +153,7 @@ void loop()
   humidity = bme.readHumidity();
 
   // Convert the value to String
-  char humiString[10];
+  
   dtostrf(humidity, 1, 2, humiString);
   strcat(humiString, " %");
   // Serial.printf("Humidity:\t%s °C\n", humiString);
@@ -153,7 +162,7 @@ void loop()
   pressure = bme.readPressure() / 100.0F;
 
   // Convert the value to String
-  char pressString[10];
+  
   dtostrf(pressure, 1, 2, pressString);
   strcat(pressString, " hPa");
   // Serial.printf("Pressure:\t%s hPa\n", pressString);
@@ -170,13 +179,13 @@ void loop()
   */
 
   // Convert the value to String
-  char altiString[10];
+  
   dtostrf(altitude, 1, 2, altiString);
   strcat(altiString, " m");
   // Serial.printf("Sealevel:\t%s m\n", altiString);
 
   // Meassurement of wind direction
-  char R[10];
+  
 
   if (digitalRead(Pin4) && (!digitalRead(Pin5)) && (!digitalRead(Pin3)))
   {
@@ -219,9 +228,15 @@ void loop()
 
   // Publish data
   client.publish("ESP32/Weatherstation/Wind_Direction", R);
+  delay(50);
   client.publish("ESP32/Weatherstation/Wind_Speed", speedString);
+  delay(50);
   client.publish("ESP32/Weatherstation/Sealevel", altiString);
+  delay(50);
   client.publish("ESP32/Weatherstation/Pressure", pressString);
+  delay(50);
   client.publish("ESP32/Weatherstation/Humidity", humiString);
+  delay(50);
   client.publish("ESP32/Weatherstation/Temperature", tempString);
+
 }
