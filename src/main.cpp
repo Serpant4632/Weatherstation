@@ -135,8 +135,6 @@ void loop()
   dtostrf(V, 1, 2, speedString);
   // Serial.printf("Wind speed:\t%s m/s\n", speedString);
   strcat(speedString, " m/s");
-  V = 0;
-  U = 0;
 
   // Tempratur in °C
   temperature = bme.readTemperature();
@@ -239,4 +237,7 @@ void loop()
   delay(50);
   client.publish("ESP32/Weatherstation/Temperature", tempString);
 
+  // Reset speed value 
+  V = 0;
+  U = 0;
 }
