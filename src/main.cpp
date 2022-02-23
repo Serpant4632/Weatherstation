@@ -58,7 +58,7 @@ char tempString[10];
 char humiString[10];
 char pressString[10];
 char altiString[10];
-char R[10];
+char direction[10];
 
 void setup()
 {
@@ -178,49 +178,47 @@ void loop()
   // Serial.printf("Sealevel:\t%s m\n", altiString);
 
   // Meassurement of wind direction
-  
-
   if (digitalRead(Pin4) && (!digitalRead(Pin5)) && (!digitalRead(Pin3)))
   {
-    strcpy(R, "S");
+    strcpy(direction, "S");
   }
   if (digitalRead(Pin4) && (digitalRead(Pin3)))
   {
-    strcpy(R, "SW");
+    strcpy(direction, "SW");
   }
   if (!digitalRead(Pin4) && (!digitalRead(Pin2)) && (digitalRead(Pin3)))
   {
-    strcpy(R, "W");
+    strcpy(direction, "W");
   }
   if (digitalRead(Pin2) && (digitalRead(Pin3)))
   {
-    strcpy(R, "NW");
+    strcpy(direction, "NW");
   }
   if (digitalRead(Pin2) && (!digitalRead(Pin5)) && (!digitalRead(Pin3)))
   {
-    strcpy(R, "N");
+    strcpy(direction, "N");
   }
   if (digitalRead(Pin2) && (digitalRead(Pin5)))
   {
-    strcpy(R, "NO");
+    strcpy(direction, "NO");
   }
   if (!digitalRead(Pin4) && (digitalRead(Pin5)) && (!digitalRead(Pin2)))
   {
-    strcpy(R, "O");
+    strcpy(direction, "O");
   }
   if (digitalRead(Pin4) && (digitalRead(Pin5)))
   {
-    strcpy(R, "SO");
+    strcpy(direction, "SO");
   }
   if (V == 0)
   {
-    strcpy(R, "Windstill");
+    strcpy(direction, "Windstill");
   }
   // Publish wind direction
-  // Serial.printf("Wind_Direction:\t%s\n",R);
+  // Serial.printf("Wind_Direction:\t%s\n",direction);
 
   // Publish data
-  client.publish("ESP32/Weatherstation/Wind_Direction", R);
+  client.publish("ESP32/Weatherstation/Wind_Direction", direction);
   delay(50);
   client.publish("ESP32/Weatherstation/Wind_Speed", speedString);
   delay(50);
