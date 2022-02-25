@@ -1,5 +1,6 @@
 // Standard Librarys
 #include <Arduino.h>
+#include <string.h>
 
 // Librarys for BME280
 #include <Wire.h>
@@ -11,11 +12,11 @@
 #include <EspMQTTClient.h>
 
 // Wifi Setup ESP32
-const char *wifiSsid = "Stachel3";
-const char *wifiPassword = "dhbw_kueck_thieser";
+const char *wifiSsid = "2.4 GHz";
+const char *wifiPassword = "KirscheBananeErdbeere1";
 
 // MQTT Broker Setup
-const char *mqttServerIp = "192.168.178.112";
+const char *mqttServerIp = "192.168.0.225";
 const char *mqttUsername = "lukas";
 const char *mqttPassword = "Test";
 const char *mqttClientName = "ESP32-Client";
@@ -34,10 +35,11 @@ uint32_t lastMsg = 0;
 
 // Activate BME280 for I2C
 Adafruit_BME280 bme;
-float temperature = 0;
-float humidity = 0;
+
+//float temperature = 0;
+//float humidity = 0;
 float pressure = 0;
-float altitude = 0;
+//float altitude = 0;
 
 // Sealevel norm Pressure in hpa
 #define SEALEVELPRESSURE_HPA (1013.25)
@@ -52,13 +54,19 @@ float altitude = 0;
 float U = 0;
 float V = 0;
 bool S = 1;
+int Errors = 1;
 
-char speedString[8];
-char tempString[10];
-char humiString[10];
-char pressString[10];
-char altiString[10];
-char direction[10];
+
+String speedString;
+String tempString;
+String humiString;
+String pressString;
+String altiString;
+String direction;
+
+// Function to detect BME errors and reset sensor
+void Error(String x);
+// If error detected, the BME value of this section will be set to "-3"
 
 void setup()
 {
@@ -131,39 +139,40 @@ void loop()
   V = (U / 10) * 0.97;
 
   // Convert meassurement to String
-  dtostrf(V, 1, 2, speedString);
+  speedString = String(V);
+  speedString = speedString + " m/s";
   // Serial.printf("Wind speed:\t%s m/s\n", speedString);
-  strcat(speedString, " m/s");
 
   // Tempratur in °C
-  temperature = bme.readTemperature();
+  // Convert the value to String 
+  tempString = String(bme.readTemperature());
   // Temprature in F, please uncomment next line
   // temperature = 1.8 * bme.readTemperature() + 32;
-
-  // Convert the value to char array
-  dtostrf(temperature, 1, 2, tempString);
-  strcat(tempString, " °C");
+  Error(tempString);
+  tempString = tempString + " °C";
   // Serial.printf("Temperature:\t%s\n", tempString);
 
   // Humidity in %
-  humidity = bme.readHumidity();
-
   // Convert the value to String
-  dtostrf(humidity, 1, 2, humiString);
-  strcat(humiString, " %");
+  humiString = String(bme.readHumidity());
+  Error(humiString);
+  humiString = humiString + " %";
   // Serial.printf("Humidity:\t%s °C\n", humiString);
 
   // Preassure in hPa
-  pressure = bme.readPressure() / 100.0F;
-
   // Convert the value to String
-  dtostrf(pressure, 1, 2, pressString);
-  strcat(pressString, " hPa");
+  pressure = bme.readPressure() / 100.0F;
+  pressString = String(pressure);
+  Error(pressString);
+  pressString = pressString + " hPa";
   // Serial.printf("Pressure:\t%s hPa\n", pressString);
 
   // Altitude in m
-  altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
-
+  // Convert the value to String
+  altiString = String(bme.readAltitude(SEALEVELPRESSURE_HPA));
+  Error(altiString);
+  altiString = altiString + " m";
+  // Serial.printf("Sealevel:\t%s m\n", altiString);
   /*
   The altitude in meters can be calculated with the international barometric formula :
       H = 44330 * [1 - (P / p0) ^ (1 / 5.255)]
@@ -172,65 +181,82 @@ void loop()
       p0 = reference pressure at sea level (e.g.1013.25hPa)
   */
 
-  // Convert the value to String
-  dtostrf(altitude, 1, 2, altiString);
-  strcat(altiString, " m");
-  // Serial.printf("Sealevel:\t%s m\n", altiString);
-
   // Meassurement of wind direction
   if (digitalRead(Pin4) && (!digitalRead(Pin5)) && (!digitalRead(Pin3)))
   {
-    strcpy(direction, "S");
+    direction = "S";
   }
   if (digitalRead(Pin4) && (digitalRead(Pin3)))
   {
-    strcpy(direction, "SW");
+    direction = "SW";
   }
   if (!digitalRead(Pin4) && (!digitalRead(Pin2)) && (digitalRead(Pin3)))
   {
-    strcpy(direction, "W");
+    direction = "W";
   }
   if (digitalRead(Pin2) && (digitalRead(Pin3)))
   {
-    strcpy(direction, "NW");
+    direction = "NW";
   }
   if (digitalRead(Pin2) && (!digitalRead(Pin5)) && (!digitalRead(Pin3)))
   {
-    strcpy(direction, "N");
+    direction = "N";
   }
   if (digitalRead(Pin2) && (digitalRead(Pin5)))
   {
-    strcpy(direction, "NO");
+    direction = "NO";
   }
   if (!digitalRead(Pin4) && (digitalRead(Pin5)) && (!digitalRead(Pin2)))
   {
-    strcpy(direction, "O");
+    direction = "O";
   }
   if (digitalRead(Pin4) && (digitalRead(Pin5)))
   {
-    strcpy(direction, "SO");
+    direction = "SO";
   }
   if (V == 0)
   {
-    strcpy(direction, "Windstill");
+    direction = "Windstill";
   }
-  // Publish wind direction
   // Serial.printf("Wind_Direction:\t%s\n",direction);
 
   // Publish data
+  if (tempString == "nan °C"){}
+  else{
+    client.publish("ESP32/Weatherstation/Temperature", tempString);
+  }
+
+  if (pressString == "nan hPa"){}
+  else{
+    client.publish("ESP32/Weatherstation/Pressure", pressString);
+  }
+
+  if (humiString == "nan %"){}
+  else{
+    client.publish("ESP32/Weatherstation/Humidity", humiString);
+  }
+
+  if (altiString == "nan m"){}
+  else{
+    client.publish("ESP32/Weatherstation/Sealevel", altiString);
+  }
+
   client.publish("ESP32/Weatherstation/Wind_Direction", direction);
-  delay(50);
   client.publish("ESP32/Weatherstation/Wind_Speed", speedString);
-  delay(50);
-  client.publish("ESP32/Weatherstation/Sealevel", altiString);
-  delay(50);
-  client.publish("ESP32/Weatherstation/Pressure", pressString);
-  delay(50);
-  client.publish("ESP32/Weatherstation/Humidity", humiString);
-  delay(50);
-  client.publish("ESP32/Weatherstation/Temperature", tempString);
-  
+
   // Reset speed value 
   V = 0;
   U = 0;
+}
+
+
+void Error (String x){
+  String payload;
+  payload = "BME280 error occured!!!";
+  if (x == "nan"){
+    client.publish("ESP32/Weatherstation/Error", payload);
+    bme.begin(0x77); // Softreset BME280
+    delay(100);
+    Errors++; // Error counter
+  }
 }
