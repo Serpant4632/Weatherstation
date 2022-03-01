@@ -12,11 +12,11 @@
 #include <EspMQTTClient.h>
 
 // Wifi Setup ESP32
-const char *wifiSsid = "2.4 GHz";
-const char *wifiPassword = "KirscheBananeErdbeere1";
+const char *wifiSsid = "Stachel3";
+const char *wifiPassword = "dhbw_kueck_thieser";
 
 // MQTT Broker Setup
-const char *mqttServerIp = "192.168.0.225";
+const char *mqttServerIp = "192.168.178.112";
 const char *mqttUsername = "lukas";
 const char *mqttPassword = "Test";
 const char *mqttClientName = "ESP32-Client";
@@ -214,7 +214,7 @@ void loop()
   {
     direction = "SO";
   }
-  if (V == 0)
+  if (0 == V)
   {
     direction = "Windstill";
   }
