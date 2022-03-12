@@ -1,0 +1,702 @@
+[
+    {
+        "id": "dfd77c54d651fcbd",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c0c906219274ee0f",
+        "type": "mqtt in",
+        "z": "dfd77c54d651fcbd",
+        "name": "ESP32/Weatherstation/Temperature",
+        "topic": "ESP32/Weatherstation/Temperature",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "75545499fbd93976",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 140,
+        "wires": [
+            [
+                "cd8c8137d06f46ca"
+            ]
+        ]
+    },
+    {
+        "id": "b8692a5e43bcab1b",
+        "type": "mqtt in",
+        "z": "dfd77c54d651fcbd",
+        "name": "ESP32/Weatherstation/Humidity",
+        "topic": "ESP32/Weatherstation/Humidity",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "75545499fbd93976",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "4751ab4e2d457c4e"
+            ]
+        ]
+    },
+    {
+        "id": "fc00e88ca18ca829",
+        "type": "mqtt in",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "topic": "ESP32/Weatherstation/Wind_Speed",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "75545499fbd93976",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 400,
+        "wires": [
+            [
+                "2d0d036d5adae9ec",
+                "4f8e5643f6a04ede",
+                "e92f96a77d7c07d9"
+            ]
+        ]
+    },
+    {
+        "id": "a0c204b8d433b40d",
+        "type": "ui_gauge",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "group": "afe696972382b11f",
+        "order": 1,
+        "width": 3,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Speed",
+        "label": "km/h",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 510,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "cd8c8137d06f46ca",
+        "type": "ui_chart",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "group": "bf3b50eb840e9dbe",
+        "order": 2,
+        "width": 5,
+        "height": 4,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 450,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4751ab4e2d457c4e",
+        "type": "ui_gauge",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "group": "ee09be0313bce3b0",
+        "order": 1,
+        "width": 3,
+        "height": 4,
+        "gtype": "gage",
+        "title": "",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 460,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0441eacdab0a7fe1",
+        "type": "ui_slider",
+        "z": "dfd77c54d651fcbd",
+        "name": "Alarmwert",
+        "label": "Alarmwert Wind",
+        "tooltip": "",
+        "group": "afe696972382b11f",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "0",
+        "max": "50",
+        "step": "0.1",
+        "className": "",
+        "x": 300,
+        "y": 640,
+        "wires": [
+            [
+                "6868cfef1bfc56c2",
+                "1d77a75ad770407b"
+            ]
+        ]
+    },
+    {
+        "id": "6868cfef1bfc56c2",
+        "type": "ui_text_input",
+        "z": "dfd77c54d651fcbd",
+        "name": "Anzeige Alarmwert",
+        "label": "",
+        "tooltip": "",
+        "group": "afe696972382b11f",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 540,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d77a75ad770407b",
+        "type": "change",
+        "z": "dfd77c54d651fcbd",
+        "name": "Speicher",
+        "rules": [
+            {
+                "t": "set",
+                "p": "alarm",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f8e5643f6a04ede",
+        "type": "switch",
+        "z": "dfd77c54d651fcbd",
+        "name": "Router",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "alarm",
+                "vt": "flow"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 490,
+        "y": 480,
+        "wires": [
+            [
+                "5ff1706d9c2df068"
+            ]
+        ]
+    },
+    {
+        "id": "55a7bff8dfdbdc13",
+        "type": "rpi-gpio out",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "pin": "18",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 880,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "f658a260811a8137",
+        "type": "debug",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e92f96a77d7c07d9",
+        "type": "switch",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "alarm",
+                "vt": "flow"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 490,
+        "y": 540,
+        "wires": [
+            [
+                "aaba64ced30a429a"
+            ]
+        ]
+    },
+    {
+        "id": "aaba64ced30a429a",
+        "type": "function",
+        "z": "dfd77c54d651fcbd",
+        "name": "function 3",
+        "func": "if (Number(msg.payload) > 0)\n{\nmsg.payload = Number(msg.payload)/Number(msg.payload)-1;}\nelse\n{msg.payload = 0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 540,
+        "wires": [
+            [
+                "55a7bff8dfdbdc13",
+                "f658a260811a8137"
+            ]
+        ]
+    },
+    {
+        "id": "5ff1706d9c2df068",
+        "type": "function",
+        "z": "dfd77c54d651fcbd",
+        "name": "function 2",
+        "func": "if (msg.payload)\nmsg.payload = Number(msg.payload)/Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 480,
+        "wires": [
+            [
+                "55a7bff8dfdbdc13",
+                "f658a260811a8137"
+            ]
+        ]
+    },
+    {
+        "id": "2d0d036d5adae9ec",
+        "type": "python3-function",
+        "z": "dfd77c54d651fcbd",
+        "name": "function 1",
+        "func": "string = msg['payload']\nmsg['payload'] = string.strip(' m/s')\nreturn msg",
+        "outputs": 1,
+        "x": 180,
+        "y": 540,
+        "wires": [
+            [
+                "a0c204b8d433b40d",
+                "4f8e5643f6a04ede",
+                "e92f96a77d7c07d9"
+            ]
+        ]
+    },
+    {
+        "id": "839a3a91a0db372c",
+        "type": "mqtt in",
+        "z": "dfd77c54d651fcbd",
+        "name": "",
+        "topic": "ESP32/Weatherstation/Winddirection",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "75545499fbd93976",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 740,
+        "wires": [
+            [
+                "8c12f6cdc41f38c4"
+            ]
+        ]
+    },
+    {
+        "id": "8c12f6cdc41f38c4",
+        "type": "function",
+        "z": "dfd77c54d651fcbd",
+        "name": "function 4",
+        "func": "x=msg.payload\nif(x >= 360)\n{msg.payload=x-360;\n    x=x-360;         }\n    \nif(x <90 && x >= 0)\n    {\n      msg.topic=\"NO\";}\nif(x <180 && x > 90)\n    {\n      msg.topic=\"SO\";}\nif(x <270 && x > 180)\n    {\n      msg.topic=\"SW\";}\nif(x <360 && x > 270)\n    {\n      msg.topic=\"NW\";}\nif(x == 0)\n    {\n      msg.topic=\"N\"; }\nif(x == 180)\n    {\n      msg.topic=\"S\"; }\nif(x == 90)\n    {\n      msg.topic=\"O\"; }\nif(x == 270)\n    {\n      msg.topic=\"W\"; }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 740,
+        "wires": [
+            [
+                "81630cb202d5f7ad"
+            ]
+        ]
+    },
+    {
+        "id": "81630cb202d5f7ad",
+        "type": "ui_gauge",
+        "z": "dfd77c54d651fcbd",
+        "name": "Wind direction",
+        "group": "d538f03c.af247",
+        "order": 1,
+        "width": 3,
+        "height": 3,
+        "gtype": "compass",
+        "title": "{{msg.topic}}",
+        "label": "degrees",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "359",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 660,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "f7f7245fb8384903",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "",
+        "order": 2,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "a50d66e71d025f71",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "afe696972382b11f",
+        "order": 2,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "d68cbc310128f917",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "afe696972382b11f",
+        "order": 3,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "fc8ed737e1cd5588",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "afe696972382b11f",
+        "order": 4,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "7c87cd05fe1f6378",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "afe696972382b11f",
+        "order": 5,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "a4753620346d1452",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "bf3b50eb840e9dbe",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "3a58dc5f2698a4a5",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "bf3b50eb840e9dbe",
+        "order": 3,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "51cee8448ba26440",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "bf3b50eb840e9dbe",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "7ee1cd6e57e3d561",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "bf3b50eb840e9dbe",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "7ddd2a359483ddfd",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "bf3b50eb840e9dbe",
+        "order": 6,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "889815b9357b3d06",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "ee09be0313bce3b0",
+        "order": 2,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "0ac7de6673cb3b99",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "ee09be0313bce3b0",
+        "order": 3,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "f5f4a0a5c405ccc9",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "ee09be0313bce3b0",
+        "order": 4,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "4a4d76b866e111e7",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "ee09be0313bce3b0",
+        "order": 5,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "e04209d5abcc3631",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "d538f03c.af247",
+        "order": 2,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "a964f2504467e6a8",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "d538f03c.af247",
+        "order": 3,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "446138e68c2b455d",
+        "type": "ui_spacer",
+        "z": "dfd77c54d651fcbd",
+        "name": "spacer",
+        "group": "d538f03c.af247",
+        "order": 4,
+        "width": 3,
+        "height": 1
+    },
+    {
+        "id": "75545499fbd93976",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.178.112",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "afe696972382b11f",
+        "type": "ui_group",
+        "name": "Wind",
+        "tab": "be1cc2fe1a609442",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bf3b50eb840e9dbe",
+        "type": "ui_group",
+        "name": "Temperature",
+        "tab": "be1cc2fe1a609442",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ee09be0313bce3b0",
+        "type": "ui_group",
+        "name": "Humidity",
+        "tab": "be1cc2fe1a609442",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d538f03c.af247",
+        "type": "ui_group",
+        "name": "Wind",
+        "tab": "be1cc2fe1a609442",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false
+    },
+    {
+        "id": "be1cc2fe1a609442",
+        "type": "ui_tab",
+        "name": "Wetterstation",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

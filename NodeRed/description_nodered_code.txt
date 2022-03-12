@@ -1,0 +1,7 @@
+This JSON file contains the source code of the graphical programming based on Node-RED to
+visualize the sensor data on a dashboard. Furthermore the code contains the basics
+to control actuators via the dashboard.
+To import the file into Node-RED you have to select the "Import" tab in the menu,
+then select the appropriate file. Thereupon the flow appears with the complete
+program in the programming environment of Node-RED.
+
