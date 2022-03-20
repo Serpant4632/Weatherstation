@@ -23,6 +23,7 @@ In einer parallel laufenden Studienarbeit wird ein Smarthome-Controller mittels 
 Der Code zur NodeRed und Python Programmierung liegt in den entsprechenden Unterordnern.
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 In the following student research project an OTA connection for a weather station is developed. 
