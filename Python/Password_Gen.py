@@ -1,7 +1,7 @@
 import secrets
 import string
 
-Password_length = 8
+Password_length = 12
 
 chars = string.digits + string.ascii_letters #+ string.punctuation 
 
