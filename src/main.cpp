@@ -111,9 +111,7 @@ void onConnectionEstablished()
 
 void loop()
 {
-  // if (!client.connected()){
-  //   reconnect();
-  // }
+  
   client.loop();
 
   // Meassurement of wind speed
