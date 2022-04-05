@@ -9,6 +9,7 @@ Dazu werden die folgenden Programme benutzt:
 - Eclipse Mosquitto: https://mosquitto.org
 - PlatformIO: https://platformio.org
 - Visual Studio Code: https://code.visualstudio.com
+-  Digi-Key Scheme-it: https://www.digikey.de/schemeit/home/
 
 Die verwendetet Hardware ist:
 - ESP32: 
@@ -18,6 +19,9 @@ https://www.raspberrypi.com/products/raspberry-pi-3-model-b-plus/
 - Wetterstation einer vorherigen Studienarbeit
 
 Zusätzlich wird ein neuer Schaltplan zur vorhanden Platine erstellt um den Anschluss und weitere Arbeiten an dem Projekt zu erleichtern, dazu wurde die Software Fusion360 von Autodesk (https://www.autodesk.de/products/fusion-360/overview) verwendet. 
+
+Die Projektdatei in Digi-Key Scheme-it wird unterfolgendem Link bereit gestellt.
+https://www.digikey.de/schemeit/project/studienarbeit-3b60e44e636847fb8b4f15b76554895c
 
 In einer parallel laufenden Studienarbeit wird ein Smarthome-Controller mittels NodeRed entwickelt um die Daten der Wetterstation zu verarbeiten und visualisieren. 
 Der Code zur NodeRed und Python Programmierung liegt in den entsprechenden Unterordnern.
@@ -35,6 +39,7 @@ The following programs are used for this purpose:
 - Eclipse Mosquitto: https://mosquitto.org
 - PlatformIO: https://platformio.org
 - Visual Studio Code: https://code.visualstudio.com
+- Digi-Key Scheme-it: https://www.digikey.de/schemeit/home/
 
 The used hardware is:
 - ESP32: 
@@ -44,7 +49,10 @@ https://www.raspberrypi.com/products/raspberry-pi-3-model-b-plus/
 - Weather station from a previous student research project
 
 In addition, a new schematic to the existing board is created to facilitate connection and further work on the project,
-using Autodesk's Fusion360 software: https://www.autodesk.de/products/fusion-360/overview 
+using Autodesk's Fusion360 software: https://www.autodesk.de/products/fusion-360/overview
+
+The project file in Digi-Key Scheme-it is provided at the following link.
+https://www.digikey.de/schemeit/project/studienarbeit-3b60e44e636847fb8b4f15b76554895c
 
 In a parallel student research project a smarthome controller is developed using NodeRed to process and visualize the data of the weather station.
 The code for NodeRed and Python programming is located in the corresponding subfolders.
